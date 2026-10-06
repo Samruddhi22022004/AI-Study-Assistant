@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Study Assistant</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ==============================
+         MAIN APP
+    =============================== -->
+    <div class="app-wrapper">
+
+        <!-- ==============================
+             HEADER
+        =============================== -->
+        <header class="app-header">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between py-3">
+
+                    <div class="brand-area">
+                        <a href="#" class="text-decoration-none">
+                            <div class="d-flex align-items-center gap-3">
+
+                                <div class="brand-icon">
+                                    <i class="bi bi-robot"></i>
+                                </div>
+
+                                <div>
+                                    <h1 class="brand-title mb-0">
+                                        AI Study Assistant
+                                    </h1>
+
+                                    <p class="brand-subtitle mb-0">
+                                        Your personal AI learning companion
+                                    </p>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="header-action d-flex align-items-center gap-2">
+
+    <!-- Theme Toggle -->
+    <button
+        type="button"
+        class="theme-toggle"
+        id="themeToggle"
+        title="Toggle dark mode"
+        aria-label="Toggle dark mode"
+    >
+        <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+    </button>
+
+    <!-- Clear History -->
+    <button
+        type="button"
+        class="btn btn-light"
+        id="clearHistoryBtn"
+        title="Clear all history"
+    >
+        <i class="bi bi-trash3"></i>
+
+        <span class="d-none d-sm-inline">
+            Clear History
+        </span>
+    </button>
+
+</div>
+
+
+
+                </div>
+            </div>
+        </header>
+
+
+        <!-- ==============================
+             MAIN CONTENT
+        =============================== -->
+        <main class="main-content">
+
+            <div class="container py-4 py-lg-5">
+
+                <div class="row g-4">
+
+
+                    <!-- ==============================
+                         LEFT SIDEBAR - HISTORY
+                    =============================== -->
+                    <aside class="col-lg-4 col-xl-3">
+
+                        <div class="history-card">
+
+                            <div class="history-header">
+
+                                <div>
+                                    <h2 class="history-title mb-1">
+                                        <i class="bi bi-clock-history"></i>
+                                        History
+                                    </h2>
+
+                                    <p class="history-subtitle mb-0">
+                                        Your previous questions
+                                    </p>
+                                </div>
+
+                                <span
+                                    class="history-count"
+                                    id="historyCount"
+                                >
+                                    0
+                                </span>
+
+                            </div>
+
+
+                            <!-- Search History -->
+                            <div class="history-search">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text">
+                                        <i class="bi bi-search"></i>
+                                    </span>
+
+                                    <input
+                                        type="search"
+                                        class="form-control"
+                                        id="historySearch"
+                                        placeholder="Search history..."
+                                        autocomplete="off"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- History List -->
+                            <div
+                                class="history-list"
+                                id="historyList"
+                            >
+
+                                <!-- Empty History -->
+                                <div
+                                    class="history-empty"
+                                    id="historyEmpty"
+                                >
+
+                                    <div class="empty-icon">
+                                        <i class="bi bi-journal-text"></i>
+                                    </div>
+
+                                    <h3>No questions yet</h3>
+
+                                    <p>
+                                        Your previous questions will
+                                        appear here.
+                                    </p>
+
+                                </div>
+
+                                <!--
+                                    JavaScript will insert
+                                    history items here.
+                                -->
+
+                            </div>
+
+                        </div>
+
+                    </aside>
+
+
+                    <!-- ==============================
+                         RIGHT SIDE - STUDY AREA
+                    =============================== -->
+                    <section class="col-lg-8 col-xl-9">
+
+                        <div class="study-card">
+
+                            <!-- ==============================
+                                 WELCOME SECTION
+                            =============================== -->
+                            <div class="welcome-section">
+
+                                <div class="welcome-icon">
+                                    <i class="bi bi-stars"></i>
+                                </div>
+
+                                <div>
+                                    <h2 class="welcome-title">
+                                        Ask me anything!
+                                    </h2>
+
+                                    <p class="welcome-text mb-0">
+                                        Ask your study-related questions
+                                        and get simple, easy-to-understand
+                                        answers.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <!-- ==============================
+                                 QUESTION FORM
+                            =============================== -->
+                            <form id="questionForm">
+
+                                <!-- Subject -->
+                                <div class="mb-4">
+
+                                    <label
+                                        for="subjectSelect"
+                                        class="form-label"
+                                    >
+                                        <i class="bi bi-book"></i>
+                                        Select Subject
+                                    </label>
+
+                                    <select
+                                        class="form-select form-select-lg"
+                                        id="subjectSelect"
+                                        name="subject"
+                                        required
+                                    >
+                                        <option value="" selected disabled>
+                                            Choose a subject
+                                        </option>
+
+                                        <option value="Python">
+                                            🐍 Python
+                                        </option>
+
+                                        <option value="C">
+                                            💻 C Programming
+                                        </option>
+
+                                        <option value="HTML">
+                                            🌐 HTML
+                                        </option>
+
+                                        <option value="Science">
+                                            🔬 Science
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- Question -->
+                                <div class="mb-3">
+
+                                    <div
+                                        class="d-flex justify-content-between align-items-center mb-2"
+                                    >
+
+                                        <label
+                                            for="questionInput"
+                                            class="form-label mb-0"
+                                        >
+                                            <i class="bi bi-chat-left-text"></i>
+                                            Ask Your Question
+                                        </label>
+
+                                        <span
+                                            class="question-counter"
+                                            id="questionCounter"
+                                        >
+                                            0 / 500
+                                        </span>
+
+                                    </div>
+
+
+                                    <textarea
+                                        class="form-control question-input"
+                                        id="questionInput"
+                                        name="question"
+                                        rows="5"
+                                        maxlength="500"
+                                        placeholder="For example: What is a variable in Python?"
+                                        required
+                                    ></textarea>
+
+                                </div>
+
+
+                                <!-- Ask Button -->
+                                <div class="question-actions">
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary ask-button"
+                                        id="askButton"
+                                    >
+
+                                        <i class="bi bi-stars"></i>
+
+                                        <span>
+                                            Ask Question
+                                        </span>
+
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-secondary"
+                                        id="clearQuestionBtn"
+                                    >
+
+                                        <i class="bi bi-x-circle"></i>
+
+                                        <span>
+                                            Clear
+                                        </span>
+
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+
+                            <!-- ==============================
+                                 ANSWER SECTION
+                            =============================== -->
+                            <div
+                                class="answer-section mt-4"
+                                id="answerSection"
+                            >
+
+                                <div class="answer-header">
+
+                                    <div class="answer-heading">
+
+                                        <div class="answer-icon">
+                                            <i class="bi bi-robot"></i>
+                                        </div>
+
+                                        <div>
+                                            <h2 class="answer-title mb-0">
+                                                AI Answer
+                                            </h2>
+
+                                            <span
+                                                class="answer-subject"
+                                                id="answerSubject"
+                                            >
+                                                Ready to help
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-secondary"
+                                        id="copyAnswerBtn"
+                                        title="Copy answer"
+                                    >
+                                        <i class="bi bi-clipboard"></i>
+                                        <span class="d-none d-sm-inline">
+                                            Copy
+                                        </span>
+                                    </button>
+
+                                </div>
+
+
+                                <!-- Loading State -->
+                                <div
+                                    class="answer-loading d-none"
+                                    id="answerLoading"
+                                >
+
+                                    <div
+                                        class="spinner-border"
+                                        role="status"
+                                    >
+                                        <span class="visually-hidden">
+                                            Loading...
+                                        </span>
+                                    </div>
+
+                                    <p class="mb-0">
+                                        Thinking about your question...
+                                    </p>
+
+                                </div>
+
+
+                                <!-- Answer Content -->
+                                <div
+                                    class="answer-content"
+                                    id="answerContent"
+                                >
+
+                                    <div class="answer-placeholder">
+
+                                        <i class="bi bi-lightbulb"></i>
+
+                                        <p class="mb-0">
+                                            Your AI-generated answer
+                                            will appear here.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </main>
+
+
+        <!-- ==============================
+             FOOTER
+        =============================== -->
+        <footer class="app-footer">
+
+            <div class="container">
+
+                <div
+                    class="d-flex flex-column flex-md-row
+                           justify-content-between align-items-center
+                           gap-2 py-3"
+                >
+
+                    <p class="mb-0">
+                        © 2026 AI Study Assistant By Samruddhi Ikhar
+                    </p>
+
+                    <p class="mb-0">
+                        Learn • Ask • Understand
+                    </p>
+
+                </div>
+
+            </div>
+
+        </footer>
+
+    </div>
+
+
+    <!-- ==============================
+         BOOTSTRAP JS
+    =============================== -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
